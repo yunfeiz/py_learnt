@@ -149,8 +149,8 @@ def usage():
 if __name__ == '__main__':
 	opts, args = getopt.getopt(sys.argv[1:], "ti:o:v:d:s:", ["help", "input=", "output="])
 	stock_list, output_file = '.\stock.txt', ''  #default stock list
-	date='2017-04-11'
-	volume=400
+	date='2017-05-19'
+	volume=800
 	single_stock=False
 	for op, value in opts:
 		if op == '-i' or op == '--input':
@@ -179,45 +179,24 @@ if __name__ == '__main__':
 		
 		
 	
-		if 0:
-			fig = plt.figure() 
-			ax1 = fig.add_subplot(3,1,1, ylim=(min(df1.volume), max(df1.volume)))
-			ax1.set_title('Net volume')
-			ax1.grid(True)
-			ax2 = fig.add_subplot(3,1,2, ylim=(min(df2.volume), max(df2.volume)))
-			ax2.set_title('Buy volume')
-			ax2.grid(True)
-			ax3 = fig.add_subplot(3,1,3,ylim=(min(df3.volume), max(df3.volume)))
-			ax3.set_title('Sell volume')
-			ax3.grid(True)
-			line, = ax1.plot_date(df1.time, df1.volume, lw=2)  
-			line2, = ax2.plot_date(df2.time, df2.volume, lw=2)
-			line3, = ax3.plot_date(df3.time, df3.volume, lw=2) 
-			#df1,df2,df3,df4=getDataUpdate(stock_selected,date,volume)
-			print(df2)
-			#print(df3)
-			#line.set_data(df1.time, df1.volume)	  
-			#line2.set_data(df2.time, df2.volume)
-			#line3.set_data(df3.time, df3.volume)
-			plt.show()
+
+		fig = plt.figure() 
+		ax1 = fig.add_subplot(2,1,1, ylim=(min(df1.volume), max(df1.volume)))
+		ax1.set_title('Net volume')
+		ax1.grid(True)
+		if min(df2.volume)+ max(df2.volume) >0:
+			ax2 = fig.add_subplot(2,1,2, ylim=(0-max(df2.volume), max(df2.volume)))
 		else:
-			fig = plt.figure() 
-			ax1 = fig.add_subplot(2,1,1, ylim=(min(df1.volume), max(df1.volume)))
-			ax1.set_title('Net volume')
-			ax1.grid(True)
-			if min(df2.volume)+ max(df2.volume) >0:
-				ax2 = fig.add_subplot(2,1,2, ylim=(0-max(df2.volume), max(df2.volume)))
-			else:
-				ax2 = fig.add_subplot(2,1,2, ylim=(min(df2.volume), 0-min(df2.volume)))
-			ax2.set_title('Buy/Sell Volume')
-			ax2.grid(True)
-			line, = ax1.plot_date(df1.time, df1.volume, '-',lw=2)  
-			line2, = ax2.plot_date(df3.time, df3.volume, lw=2)
-			line2.set_color('red')
-			line3, = ax2.plot_date(df4.time, df4.volume, lw=2)
-			line3.set_color('green')
-		
-			plt.show()
+			ax2 = fig.add_subplot(2,1,2, ylim=(min(df2.volume), 0-min(df2.volume)))
+		ax2.set_title('Buy/Sell Volume')
+		ax2.grid(True)
+		line, = ax1.plot_date(df1.time, df1.volume, '-',lw=2)  
+		line2, = ax2.plot_date(df3.time, df3.volume, lw=2)
+		line2.set_color('red')
+		line3, = ax2.plot_date(df4.time, df4.volume, lw=2)
+		line3.set_color('green')
+	
+		plt.show()
 		
 	else:
 		STOCK_LIST=getStockList(stock_list)	
