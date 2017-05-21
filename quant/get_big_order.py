@@ -1,5 +1,4 @@
 #-*-coding:utf-8-*-
-#!/usr/bin/python
 # coding: UTF-8
 
 """
@@ -52,30 +51,33 @@ def analyze_big_order(code_list,date,volume):
 	df2.sort_values(by='Abs', ascending=False, inplace=True)
 	pd.set_option('display.width', 200)
 	pd.set_option('max_columns',40)
-	#print(df2)
-	print('='*100)
-	print ("Sorting by Abs Ascending:")
-	print('='*100)
-	df2.insert(0,'Code',df2.code)
-	df2.insert(1,'Name',df2.name)
-	df2.insert(2,'Buy',df2.buy)
-	df2.insert(3,'Sell',df2.sell)
-	#df2.insert(4,'YYY',df2.abs)
-	print (df2.iloc[:50,:5])
-	print ("Sorting by ABS descending:")
-	print('='*100)
-	df2.sort_values(by='Abs', ascending=True, inplace=True)
-	print (df2.iloc[:50,:5])
-	
-	print ("Sorting by Buy Orders")
-	print('='*100)
-	df2.sort_values(by='Buy', ascending=False, inplace=True)
-	print (df2.iloc[:50,:5])
-	
-	print ("Sorting by Sell Orders\n")
-	print('='*100)
-	df2.sort_values(by='Sell', ascending=False, inplace=True)
-	print (df2.iloc[:50,:5])
+	if len(df2.Code)==0:
+		print ("There was no big order")
+	else:
+		#print(df2)
+		print('='*100)
+		print ("Sorting by Abs Ascending:")
+		print('='*100)
+		df2.insert(0,'Code',df2.code)
+		df2.insert(1,'Name',df2.name)
+		df2.insert(2,'Buy',df2.buy)
+		df2.insert(3,'Sell',df2.sell)
+		#df2.insert(4,'YYY',df2.abs)
+		print (df2.iloc[:50,:5])
+		print ("Sorting by ABS descending:")
+		print('='*100)
+		df2.sort_values(by='Abs', ascending=True, inplace=True)
+		print (df2.iloc[:50,:5])
+		
+		print ("Sorting by Buy Orders")
+		print('='*100)
+		df2.sort_values(by='Buy', ascending=False, inplace=True)
+		print (df2.iloc[:50,:5])
+		
+		print ("Sorting by Sell Orders\n")
+		print('='*100)
+		df2.sort_values(by='Sell', ascending=False, inplace=True)
+		print (df2.iloc[:50,:5])
 	
 
 	
@@ -92,10 +94,10 @@ def getStockList(stock_list):
 	return STOCK
 	
 def usage():
-	print (sys.argv[0] + ' -i inputfile -o outputfile')
+	print (sys.argv[0] + ' -i stock list file')
 	print (sys.argv[0] + ' -h #get help info')
 	print (sys.argv[0] + ' -t show data today')
-	print (sys.argv[0] + ' -v threshold')
+	print (sys.argv[0] + ' -v threshold, for example 800')
 	print (sys.argv[0] + ' -a check all list')
 	print (sys.argv[0] + ' -d set date')
 
@@ -103,14 +105,12 @@ def usage():
 
 if __name__ == '__main__':
 	opts, args = getopt.getopt(sys.argv[1:], "ti:o:v:d:s:a", ["help", "input=", "output="])
-	stock_list, output_file = '.\stock.txt', ''  #default stock list
-	date='2017-03-17'
+	stock_list= '.\stock.txt'
+	date='2017-05-19'
 	volume=400
 	for op, value in opts:
-		if op == '-i' or op == '--input':
+		if op == '-i':
 			stock_list = value
-		elif op == '-o' or op == '--output':
-			output_file = value
 		elif op == '-t':
 			date=dt.date.today()
 		elif op == '-d':
@@ -120,6 +120,9 @@ if __name__ == '__main__':
 		elif op == '-a':
 			stock_list='all.txt'
 		elif op == '-h':
+			usage()
+			sys.exit()
+		else:
 			usage()
 			sys.exit()
 	
