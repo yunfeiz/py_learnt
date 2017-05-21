@@ -8,6 +8,8 @@ import pandas as pd
 import tushare as ts
 import numpy as np
 import matplotlib.pyplot as plt
+import sys,getopt,argparse
+import datetime as d
 import sys 
 import os
 import time
@@ -69,19 +71,53 @@ def get_all_price(code_list):
 	#print (df.iloc[:,1:11])
 	df.sort_values(by='Amount', ascending=False, inplace=True)
 	#print ("Sorting by Amount\n")
-	print('='*100)
+	print('='*120)
 	#plt.show(df.plot())
 	#print(df)
-	print (df.iloc[:,1:11])
-	print('='*100)
-	
-def getStockList():
+	print (df.iloc[:20,:11])
+	print('='*120)
+
+
+def getStockList(stock_list):
+#get stock list:
 	STOCK = ["002281","600487","600522","000413","000009","002230","603337","002241","000292","000839","300024","300134","002074","300236","600198","002253","300166","300078","600435","600703"]
+	#Get list from text files
+	f = open(stock_list)
+	lines=f.readlines()
+	for line in lines:
+		if line[0:6] not in STOCK:
+			#print(line)
+			STOCK.append(line[0:6])
 	return STOCK
 
+def usage():
+	print (sys.argv[0] + ' -i stock list file')
+	print (sys.argv[0] + ' -h get help info')
+	print (sys.argv[0] + ' -a check all list')
+	print (sys.argv[0] + ' -s stock id')
 	
+
 if __name__ == '__main__':
-	STOCK_LIST=getStockList()
+	opts, args = getopt.getopt(sys.argv[1:], "ti:o:v:d:s:", ["help", "input=", "output="])
+	stock_list=''
+	single_stock=False
+	stock_selected="002281"
+	for op, value in opts:
+		if op == '-i':
+			stock_list=value
+		elif op == '-a':
+			stock_list='all.txt'
+		elif op == '-s':
+			single_stock=True
+			stock_selected = value
+		elif op == '-h':
+			usage()
+			sys.exit()
+
+	if single_stock == True:
+		STOCK_LIST=stock_selected
+	else:
+		STOCK_LIST=getStockList(stock_list)
 	while True:
 		try:
 			os.system('clear')

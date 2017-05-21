@@ -142,21 +142,22 @@ def getDataUpdate (stock_selected,date,volume):
 	return df1,df2,df3,df4
 
 def usage():
-	print (sys.argv[0] + ' -i inputfile -o outputfile')
+	print (sys.argv[0] + ' -i stock list file')
 	print (sys.argv[0] + ' -h #get help info')
-
+	print (sys.argv[0] + ' -t show data today')
+	print (sys.argv[0] + ' -v threshold, for example 800')
+	print (sys.argv[0] + ' -a check all list')
+	print (sys.argv[0] + ' -d set date')
 
 if __name__ == '__main__':
 	opts, args = getopt.getopt(sys.argv[1:], "ti:o:v:d:s:", ["help", "input=", "output="])
-	stock_list, output_file = '.\stock.txt', ''  #default stock list
+	stock_list= '.\stock.txt'
 	date='2017-05-19'
 	volume=800
 	single_stock=False
 	for op, value in opts:
-		if op == '-i' or op == '--input':
+		if op == '-i':
 			stock_list = value
-		elif op == '-o' or op == '--output':
-			output_file = value
 		elif op == '-t':
 			date=dt.date.today()
 		elif op == '-d':
