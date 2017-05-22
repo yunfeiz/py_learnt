@@ -61,23 +61,12 @@ def get_all_price(code_list):
 	#print (df.iloc[:,1:11])
 	df.sort_values(by='Percentage', ascending=False, inplace=True)
 
-	
-#remove some columns
-
-#reord some colums
-
 	pd.set_option('display.width', 200)
 	pd.set_option('max_columns',40)
-	#print ("Sorting per Percentage\n")
-	#print('='*20)
-	#df.drop([df.columns[[10:15]],axis=1,inplace=True)
-	#print (df.iloc[:,1:11])
+	
 	df.sort_values(by='Amount', ascending=False, inplace=True)
-	#print ("Sorting by Amount\n")
 	print('='*120)
-	#plt.show(df.plot())
-	#print(df)
-	print (df.iloc[:20,:11])
+	print (df.iloc[:10,1:11])
 	print('='*120)
 
 
@@ -94,7 +83,7 @@ def getStockList(stock_list):
 				#print(line)
 				STOCK.append(line[0:6])
 		f.close()
-	except:
+	except IOError:
 		print("Can't open the file", stock_list)
 	return STOCK
 
