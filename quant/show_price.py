@@ -8,11 +8,14 @@ import pandas as pd
 import tushare as ts
 import numpy as np
 import matplotlib.pyplot as plt
-import sys,getopt,argparse
+import getopt,argparse
 import datetime as d
-import sys 
 import os
 import time
+
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 
 def get_all_price(code_list):
@@ -79,15 +82,20 @@ def get_all_price(code_list):
 
 
 def getStockList(stock_list):
-#get stock list:
-	STOCK = ["002281","600487","600522","000413","000009","002230","603337","002241","000292","000839","300024","300134","002074","300236","600198","002253","300166","300078","600435","600703"]
+	STOCK = ["002281","600487","600522","000413","000009","002230","603337",
+	"002241","000292","000839","300024","300134","002074","300236","600198",
+	"002253","300166","300078","600435","600703"]
 	#Get list from text files
-	f = open(stock_list)
-	lines=f.readlines()
-	for line in lines:
-		if line[0:6] not in STOCK:
-			#print(line)
-			STOCK.append(line[0:6])
+	try:
+		f = open(stock_list)
+		lines=f.readlines()
+		for line in lines:
+			if line[0:6] not in STOCK:
+				#print(line)
+				STOCK.append(line[0:6])
+		f.close()
+	except:
+		print("Can't open the file", stock_list)
 	return STOCK
 
 def usage():
