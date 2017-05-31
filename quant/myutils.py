@@ -12,10 +12,7 @@ import getopt,argparse
 import datetime as d
 import os
 import time
-
 import sys
-reload(sys)
-sys.setdefaultencoding("utf-8")
 
 
 def get_all_price(code_list):
