@@ -85,7 +85,7 @@ def train_lstm():
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         #重复训练10000次
-        for i in range(10000):
+        for i in range(100):
             step=0
             start=0
             end=start+batch_size
@@ -96,7 +96,7 @@ def train_lstm():
                 #每10步保存一次参数
                 if step%10==0:
                     print(i,step,loss_)
-                    #print("保存模型：",saver.save(sess,'stock.model'))
+                    print("save model:",saver.save(sess,'.\stock.model'))
                 step+=1
 
 
