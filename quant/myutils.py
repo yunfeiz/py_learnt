@@ -9,11 +9,20 @@ import tushare as ts
 import numpy as np
 import matplotlib.pyplot as plt
 import getopt,argparse
-import datetime as d
+
 import os
 import time
 import sys
+from datetime import datetime, timedelta,date
 
+
+def n_days_ago(n):
+	#now=datetime.now()
+	today=date.today()
+	#print("Now:\n"+str(today))
+	ndays_ago=today-timedelta(n)
+	#print(str(n)+" days ago:\n"+str(ndays_ago))
+	return str(ndays_ago)
 
 def get_all_price(code_list):
 	df = ts.get_realtime_quotes(code_list)

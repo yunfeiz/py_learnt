@@ -29,7 +29,7 @@ def usage():
 	print (sys.argv[0] + ' -d set date')
 
 if __name__ == '__main__':
-	opts, args = getopt.getopt(sys.argv[1:], "ti:o:v:d:s:", ["help", "input=", "output="])
+	opts, args = getopt.getopt(sys.argv[1:], "t:i:o:v:d:s:", ["help", "input=", "output="])
 	stock_list= '.\stock.txt'
 	date='2017-05-19'
 	volume=800
@@ -38,7 +38,7 @@ if __name__ == '__main__':
 		if op == '-i':
 			stock_list = value
 		elif op == '-t':
-			date=dt.date.today()
+			date=n_days_ago(float(value))
 		elif op == '-d':
 			date=value
 		elif op == '-v':
