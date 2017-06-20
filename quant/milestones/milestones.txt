@@ -1,0 +1,20 @@
+========================================================
+05/30/2017:  V0.1
+========================================================
+1) Get share lists from file
+2) Get and track real-time data for one share or top 10 
+   stocks in cmd line
+
+3) Get history data for one share and plot it by request
+
+4) Get and show big order stats for one stock or top 20 
+   stocks
+
+========================================================
+06/30/2017: v0.2
+========================================================
+1) fundamental analysis for one or top stocks
+2) backtest strategies, and define unified interface of 
+   strategy
+3) Add zipline/TA-Lab/pyalgotrade... framework
+

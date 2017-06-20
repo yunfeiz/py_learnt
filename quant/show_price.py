@@ -23,6 +23,7 @@ def usage():
 if __name__ == '__main__':
 	opts, args = getopt.getopt(sys.argv[1:], "ti:o:v:d:s:", ["help", "input=", "output="])
 	stock_list=''
+	STOCK_LIST=[]
 	single_stock=False
 	stock_selected="002281"
 	for op, value in opts:
@@ -32,13 +33,13 @@ if __name__ == '__main__':
 			stock_list='all.txt'
 		elif op == '-s':
 			single_stock=True
-			stock_selected = value
+			STOCK_LIST.append(value)
 		elif op == '-h':
 			usage()
 			sys.exit()
 
 	if single_stock == True:
-		STOCK_LIST=stock_selected
+		pass
 	else:
 		STOCK_LIST=getStockList(stock_list)
 	while True:
