@@ -16,6 +16,16 @@ import sys
 from datetime import datetime, timedelta,date
 
 
+def better_possition(win  = 10000, loss = 5000, rate_win = 0.6):
+	if loss != 0:
+		win_loss_ratio = win/loss
+	else:
+		win_loss_ratio = 2
+	if ((win_loss_ratio >0 ) & (rate_win <=1) & (rate_win > 0)):
+		return (rate_win * win_loss_ratio - (1-rate_win)) / win_loss_ratio
+	else:
+		return 0.2
+
 def n_days_ago(n):
 	#now=datetime.now()
 	today=date.today()
