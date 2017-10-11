@@ -58,19 +58,36 @@ if __name__ == '__main__':
 			sys.exit()
 		
 
-		fig = plt.figure() 
-		ax1 = fig.add_subplot(2,1,1, ylim=(min(df1.volume), max(df1.volume)))
-		ax1.set_title('Net volume')
+		fig = plt.figure(figsize=(9.8,6.18))
+
+		ax0 = fig.add_subplot(3,1,1, ylim=(min(df1.price[1:]), max(df1.price[1:])))
+		ax0.set_title('Real Time Price')
+		ax0.grid(True)
+
+
+		ax1 = fig.add_subplot(3,1,2, ylim=(min(df1.volume), max(df1.volume)))
+		ax1.set_title('Net Volume of Big Order')
 		ax1.grid(True)
+
 		if min(df2.volume)+ max(df2.volume) >0:
-			ax2 = fig.add_subplot(2,1,2, ylim=(0-max(df2.volume), max(df2.volume)))
+			ax2 = fig.add_subplot(3,1,3, ylim=(0-max(df2.volume), max(df2.volume)))
 		else:
-			ax2 = fig.add_subplot(2,1,2, ylim=(min(df2.volume), 0-min(df2.volume)))
-		ax2.set_title('Buy/Sell Volume')
+			ax2 = fig.add_subplot(3,1,3, ylim=(min(df2.volume), 0-min(df2.volume)))
+		ax2.set_title('Buy/Sell Volume of Big Order')
 		ax2.grid(True)
-		line, = ax1.plot_date(df1.time, df1.volume, '-',lw=2)  
+
+
+		line0, = ax0.plot_date(df1.time[1:], df1.price[1:], '-',lw=2)
+		line0.set_color('red')
+
+		line1, = ax1.plot_date(df1.time, df1.volume, '-',lw=2)
+		line1.set_color('red')
+
+
+
 		line2, = ax2.plot_date(df3.time, df3.volume, lw=2)
 		line2.set_color('red')
+
 		line3, = ax2.plot_date(df4.time, df4.volume, lw=2)
 		line3.set_color('green')
 	
