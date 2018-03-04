@@ -57,7 +57,8 @@ if __name__ == '__main__':
 	
 	if single_stock == True:
 		df,df1,df2,df3,df4=get_big_order_data(stock_selected,date,volume)
-		print(df)
+		print(df1)
+		df1.to_csv("data.csv")
 """
 		if len(df2.volume)==0:
 			print ("There was no big order")

@@ -246,27 +246,27 @@ def get_big_order_data (stock_selected,date,volume):
 		idx -=1
 		if(df.type[idx] == "买盘"):
 			i=i+1
-			buy_time.append(df.time[idx])
+			buy_time.append(date+" " + df.time[idx])
 			buy_volume.append(df.volume[idx])
 			buy_price.append(df.price[idx])
-			_time.append(df.time[idx])
+			_time.append(date+" " + df.time[idx])
 			_volume.append(df.volume[idx])
 			_volume[i]=float(_volume[i])+float(_volume[i-1])
 			_price.append(df.price[idx])
-			all_time.append(df.time[idx])
+			all_time.append(date+" " + df.time[idx])
 			all_volume.append(df.volume[idx])
 			all_price.append(df.price[idx])
 			#_buy += float(df.volume[idx])*float(df.price[idx])/10000.0
 		elif(df.type[idx] == "卖盘"):
 			i=i+1
-			sell_time.append(df.time[idx])
+			sell_time.append(date+" " + df.time[idx])
 			sell_volume.append(0-df.volume[idx])
 			sell_price.append(df.price[idx])
-			_time.append(df.time[idx])
+			_time.append(date+" " + df.time[idx])
 			_volume.append(0-float(df.volume[idx]))
 			_volume[i]=float(_volume[i])+float(_volume[i-1])
 			_price.append(df.price[idx])
-			all_time.append(df.time[idx])
+			all_time.append(date+" " + df.time[idx])
 			all_volume.append(0-float(df.volume[idx]))
 			all_price.append(df.price[idx])
 	df1=pd.DataFrame({'time':_time,'volume':_volume,'price':_price})
