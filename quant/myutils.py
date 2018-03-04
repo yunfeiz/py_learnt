@@ -223,6 +223,59 @@ def getDataUpdate (stock_selected,date,volume):
 	df4=pd.DataFrame({'time':sell_time,'volume':sell_volume,'price':sell_price})
 	return df1,df2,df3,df4
 
+def get_big_order_data (stock_selected,date,volume):
+	df = ts.get_sina_dd(stock_selected,date,vol=volume)
+	_time=['9:25:0']
+	_volume=[0]
+	_price=[0]
+	all_time=[]
+	all_volume=[]
+	all_price=[]
+	buy_time=[]
+	buy_volume=[]
+	buy_price=[]
+	sell_time=[]
+	sell_volume=[]
+	sell_price=[]
+	if df is None:
+		idx=0
+	else:
+		idx=len(df.time)
+	i=0
+	while(idx>0):
+		idx -=1
+		if(df.type[idx] == "买盘"):
+			i=i+1
+			buy_time.append(df.time[idx])
+			buy_volume.append(df.volume[idx])
+			buy_price.append(df.price[idx])
+			_time.append(df.time[idx])
+			_volume.append(df.volume[idx])
+			_volume[i]=float(_volume[i])+float(_volume[i-1])
+			_price.append(df.price[idx])
+			all_time.append(df.time[idx])
+			all_volume.append(df.volume[idx])
+			all_price.append(df.price[idx])
+			#_buy += float(df.volume[idx])*float(df.price[idx])/10000.0
+		elif(df.type[idx] == "卖盘"):
+			i=i+1
+			sell_time.append(df.time[idx])
+			sell_volume.append(0-df.volume[idx])
+			sell_price.append(df.price[idx])
+			_time.append(df.time[idx])
+			_volume.append(0-float(df.volume[idx]))
+			_volume[i]=float(_volume[i])+float(_volume[i-1])
+			_price.append(df.price[idx])
+			all_time.append(df.time[idx])
+			all_volume.append(0-float(df.volume[idx]))
+			all_price.append(df.price[idx])
+	df1=pd.DataFrame({'time':_time,'volume':_volume,'price':_price})
+	df2=pd.DataFrame({'time':all_time,'volume':all_volume,'price':all_price})
+	#print(df2)
+	df3=pd.DataFrame({'time':buy_time,'volume':buy_volume,'price':buy_price})
+	df4=pd.DataFrame({'time':sell_time,'volume':sell_volume,'price':sell_price})
+	return df,df1,df2,df3,df4
+
 def usage():
 	print (sys.argv[0] + ' -i stock list file')
 	print (sys.argv[0] + ' -h get help info')
