@@ -313,13 +313,20 @@ def get_big_order_data_v2(stock_selected,n,volume):
 	while n>0:
 		ndate=n_days_ago(float(n))
 		n = n-1
-		df = ts.tick(stock_selected, conn=cons, date=ndate)
+		df_temp = ts.tick(stock_selected, conn=cons, date=ndate)
 		
+		
+		if df_temp is None:			
+			df=None
+		else:
+			df=df_temp[df_temp.vol>400]
 		
 		if df is None:
 			idx=0
 		else:
 			idx=len(df.datetime)
+		print(idx)
+			
 	
 		while(idx>0):
 			idx -=1
