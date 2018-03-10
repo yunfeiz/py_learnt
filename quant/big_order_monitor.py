@@ -43,7 +43,8 @@ if __name__ == '__main__':
 		if op == '-i':
 			stock_list = value
 		elif op == '-t':
-			date=n_days_ago(float(value))
+			#date=n_days_ago(float(value))
+			n=float(value)
 		elif op == '-d':
 			date=value
 		elif op == '-v':
@@ -56,10 +57,11 @@ if __name__ == '__main__':
 			sys.exit()
 	
 	if single_stock == True:
-		df,df1,df2,df3,df4=get_big_order_data(stock_selected,date,volume)
+		df1,df2,df3,df4=get_big_order_data(stock_selected,n,volume)
 		print(df1)
+
 		df1.to_csv("data.csv")
-"""
+
 		if len(df2.volume)==0:
 			print ("There was no big order")
 			sys.exit()
@@ -99,7 +101,6 @@ if __name__ == '__main__':
 		line3.set_color('green')
 	
 		plt.show() 
-"""
 
 
 
