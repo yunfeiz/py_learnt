@@ -57,7 +57,7 @@ if __name__ == '__main__':
 			sys.exit()
 	
 	if single_stock == True:
-		df1,df2,df3,df4=get_big_order_data(stock_selected,n,volume)
+		df1,df2,df3,df4=get_big_order_data_v2(stock_selected,n,volume)
 		print(df1)
 
 		df1.to_csv("data.csv")

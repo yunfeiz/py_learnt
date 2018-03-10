@@ -290,6 +290,77 @@ def get_big_order_data (stock_selected,n,volume):
 	df4=pd.DataFrame({'time':sell_time,'volume':sell_volume,'price':sell_price})
 	return df1,df2,df3,df4
 
+def get_big_order_data_v2(stock_selected,n,volume):
+	cons = ts.get_apis()
+	
+	i=0
+	date=n_days_ago(float(n))
+	_time=[]
+	_volume=[0]
+	_price=[0]
+	_time=[date +" " + "9:25:00"]
+	all_time=[]
+	all_volume=[]
+	all_price=[]
+	buy_time=[]
+	buy_volume=[]
+	buy_price=[]
+	sell_time=[]
+	sell_volume=[]
+	sell_price=[]
+	
+
+	while n>0:
+		ndate=n_days_ago(float(n))
+		n = n-1
+		df = ts.tick(stock_selected, conn=cons, date=ndate)
+		
+		
+		if df is None:
+			idx=0
+		else:
+			idx=len(df.datetime)
+	
+		while(idx>0):
+			idx -=1
+			if(df.type[idx] == 0):
+				i=i+1
+				buy_time.append(df.datetime[idx])
+				buy_volume.append(df.vol[idx])
+				buy_price.append(df.price[idx])
+
+				_time.append(df.datetime[idx])
+				_volume.append(df.vol[idx])
+				_volume[i]=float(_volume[i])+float(_volume[i-1])
+				_price.append(df.price[idx])
+
+				all_time.append(df.datetime[idx])
+				all_volume.append(df.vol[idx])
+				all_price.append(df.price[idx])
+				#_buy += float(df.volume[idx])*float(df.price[idx])/10000.0
+			elif(df.type[idx] == 1):
+				i=i+1
+
+				sell_time.append(df.datetime[idx])
+				sell_volume.append(0-df.vol[idx])
+				sell_price.append(df.price[idx])
+
+				_time.append(df.datetime[idx])
+				_volume.append(0-float(df.vol[idx]))
+				_volume[i]=float(_volume[i])+float(_volume[i-1])
+				_price.append(df.price[idx])
+
+				all_time.append(date+" " + df.datetime[idx])
+				all_volume.append(0-float(df.vol[idx]))
+				all_price.append(df.price[idx])
+	df1=pd.DataFrame({'time':_time,'volume':_volume,'price':_price})
+	df2=pd.DataFrame({'time':all_time,'volume':all_volume,'price':all_price})
+	#print(df2)
+	df3=pd.DataFrame({'time':buy_time,'volume':buy_volume,'price':buy_price})
+	df4=pd.DataFrame({'time':sell_time,'volume':sell_volume,'price':sell_price})
+	ts.close_apis(cons)
+	return df1,df2,df3,df4
+
 def usage():
 	print (sys.argv[0] + ' -i stock list file')
 	print (sys.argv[0] + ' -h get help info')
