@@ -290,6 +290,13 @@ def get_big_order_data (stock_selected,n,volume):
 	df4=pd.DataFrame({'time':sell_time,'volume':sell_volume,'price':sell_price})
 	return df1,df2,df3,df4
 
+def  get_big_order(stock_selected, conn, date, vol):
+	df = ts.tick(stock_selected, conn=conn, date=date)
+	if df is None:
+		return None
+	else:
+		return df[df.vol>vol].reset_index()  #reset index to row number
+
 def get_big_order_data_v2(stock_selected,n,volume):
 	cons = ts.get_apis()
 	
@@ -313,23 +320,17 @@ def get_big_order_data_v2(stock_selected,n,volume):
 	while n>0:
 		ndate=n_days_ago(float(n))
 		n = n-1
-		df_temp = ts.tick(stock_selected, conn=cons, date=ndate)
+		df = get_big_order(stock_selected, conn=cons, date=ndate, vol=volume)
 		
-		
-		if df_temp is None:			
-			df=None
-		else:
-			df=df_temp[df_temp.vol>400]
 		
 		if df is None:
-			idx=0
+			length=0
 		else:
-			idx=len(df.datetime)
-		print(idx)
-			
-	
-		while(idx>0):
-			idx -=1
+			length=len(df.datetime)
+		print(df)
+		idx = 0
+		while(idx < length):
+			#print(df.type)
 			if(df.type[idx] == 0):
 				i=i+1
 				buy_time.append(df.datetime[idx])
@@ -360,6 +361,7 @@ def get_big_order_data_v2(stock_selected,n,volume):
 				all_time.append(date+" " + df.datetime[idx])
 				all_volume.append(0-float(df.vol[idx]))
 				all_price.append(df.price[idx])
+			idx = idx +1
 	df1=pd.DataFrame({'time':_time,'volume':_volume,'price':_price})
 	df2=pd.DataFrame({'time':all_time,'volume':all_volume,'price':all_price})
 	#print(df2)
