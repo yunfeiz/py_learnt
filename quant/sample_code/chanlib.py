@@ -699,13 +699,46 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
 
     #  在原图基础上添加分笔蓝线
     plt.plot(x_xd_seq,y_xd_seq)
+    high_point = k_data['high'].max()
+    low_point = k_data['low'].min()
+    end_x = max(x_date_list)
+
+    high_x =[0,0]
+    high_y =[0,0]
+    high_x[1] = end_x
+    high_y[0] = high_point
+    high_y[1] = high_y[0]
+    plt.plot(high_x,high_y)
+
+    low_x =[0,0]
+    low_y =[0,0]
+    low_x[1] = end_x
+    low_y[0] = low_point
+    low_y[1] = low_y[0]
+    plt.plot(low_x,low_y)
+    
+    increase = high_point - low_point
+    mid_x =[0,0]
+    mid_y =[0,0]
+    mid_x[1] = end_x
+    mid_y[0] = low_point + increase/2
+    mid_y[1] = mid_y[0]
+    plt.plot(mid_x,mid_y)
+
+    mid_x_1 =[0,0]
+    mid_y_1 =[0,0]
+    mid_x_1[1] = end_x
+    mid_y_1[0] = low_point + increase * 0.618
+    mid_y_1[1] = mid_y_1[0]
+    plt.plot(mid_x_1,mid_y_1)
+
+    mid_x_2 =[0,0]
+    mid_y_2 =[0,0]
+    mid_x_2[1] = end_x
+    mid_y_2[0] = low_point + increase * 0.382
+    mid_y_2[1] = mid_y_2[0]
+    plt.plot(mid_x_2,mid_y_2)
 
 
     plt.show()
 
-
-    #  在原图基础上添加分笔蓝线
-    # plt.plot(x_fenbi_seq,y_fenbi_seq)
-
-    # plt.show()
-#End Date
