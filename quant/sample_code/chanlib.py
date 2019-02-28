@@ -702,6 +702,7 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
     high_point = k_data['high'].max()
     low_point = k_data['low'].min()
     end_x = max(x_date_list)
+    text_x = max(x_fenbi_seq)
 
     high_x =[0,0]
     high_y =[0,0]
@@ -709,6 +710,7 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
     high_y[0] = high_point
     high_y[1] = high_y[0]
     plt.plot(high_x,high_y)
+    plt.text(text_x, high_point,'100% : '+str(high_point), ha='left', fontsize=16)
 
     low_x =[0,0]
     low_y =[0,0]
@@ -716,6 +718,7 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
     low_y[0] = low_point
     low_y[1] = low_y[0]
     plt.plot(low_x,low_y)
+    plt.text(text_x, low_point,'0% : '+str(low_point), ha='left', fontsize=16)
     
     increase = high_point - low_point
     mid_x =[0,0]
@@ -724,6 +727,7 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
     mid_y[0] = low_point + increase/2
     mid_y[1] = mid_y[0]
     plt.plot(mid_x,mid_y)
+    plt.text(text_x, mid_y[0],'50% : '+str(mid_y[0]), ha='left', fontsize=16)
 
     mid_x_1 =[0,0]
     mid_y_1 =[0,0]
@@ -731,6 +735,7 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
     mid_y_1[0] = low_point + increase * 0.618
     mid_y_1[1] = mid_y_1[0]
     plt.plot(mid_x_1,mid_y_1)
+    plt.text(text_x, mid_y_1[0],'61.8% : '+str(mid_y_1[0]), ha='left', fontsize=16)
 
     mid_x_2 =[0,0]
     mid_y_2 =[0,0]
@@ -738,6 +743,7 @@ def run_chan_analysis(stock_code,end_date,stock_days,x_jizhun,stock_frequency,ch
     mid_y_2[0] = low_point + increase * 0.382
     mid_y_2[1] = mid_y_2[0]
     plt.plot(mid_x_2,mid_y_2)
+    plt.text(text_x, mid_y_2[0],'61.8% : '+str(mid_y_2[0]), ha='left', fontsize=16)
 
 
     plt.show()
