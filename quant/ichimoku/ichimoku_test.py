@@ -12,20 +12,19 @@ import time
 import sys
 import getopt,argparse
 
-
+MAX_ROLLING = 100
 def test_run(stock='000725'):
 
 	duration = 360
 	#now=datetime.now()
 	today=date.today()
-	ndays_ago=today-timedelta(duration)
-	#print(str(n)+" days ago:\n"+str(ndays_ago))
+	ndays_ago=today-timedelta(duration+MAX_ROLLING)
 	start_date=str(ndays_ago)
 	end_date =str(today)
 
 
 	df = get_data(stock,start_date, end_date)
-	plot_data(df,ichimoku(df['close']),title=stock)
+	plot_data(df[MAX_ROLLING:],ichimoku(df['close'])[MAX_ROLLING:],title=stock)
 
 
 def usage():
