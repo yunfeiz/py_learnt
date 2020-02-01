@@ -18,6 +18,7 @@ from myutils import *
 from matplotlib import animation
 
 
+from pandas.plotting import register_matplotlib_converters
 
 
 def usage():
@@ -34,6 +35,7 @@ if __name__ == '__main__':
 	date='2017-05-19'
 	volume=800
 	single_stock=False
+	register_matplotlib_converters()
 	for op, value in opts:
 		if op == '-i':
 			stock_list = value
